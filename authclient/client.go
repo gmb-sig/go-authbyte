@@ -216,11 +216,37 @@ func (c *Client) parseToken(ctx context.Context, tokenStr string) (*claims.Claim
 	return &cl, nil
 }
 
+// requestURL reconstructs the absolute request URL for DPoP htu matching,
+// honouring gateway-set X-Forwarded-Proto / X-Forwarded-Host so the htu matches
+// the public URL the caller signed its proof for when TLS terminates at the
+// edge rather than the pod. The gateway must strip these from client traffic.
 func requestURL(ctx *azugo.Context) string {
 	scheme := "http"
 	if ctx.IsTLS() {
 		scheme = "https"
 	}
+	if p := firstForwardedValue(ctx.Header.Get("X-Forwarded-Proto")); p != "" {
+		scheme = p
+	}
 
-	return scheme + "://" + ctx.Host() + ctx.Path()
+	host := ctx.Host()
+	if h := firstForwardedValue(ctx.Header.Get("X-Forwarded-Host")); h != "" {
+		host = h
+	}
+
+	return scheme + "://" + host + ctx.Path()
+}
+
+// firstForwardedValue returns the first, trimmed value of a possibly
+// comma-separated forwarded header.
+func firstForwardedValue(v string) string {
+	if v == "" {
+		return ""
+	}
+
+	if i := strings.IndexByte(v, ','); i >= 0 {
+		v = v[:i]
+	}
+
+	return strings.TrimSpace(v)
 }
