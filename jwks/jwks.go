@@ -24,10 +24,10 @@ var ErrUnknownKey = errors.New("jwks: no key for kid")
 
 // Client fetches and caches a JWKS document.
 type Client struct {
-	url      string
-	ttl      time.Duration
-	http     *http.Client
-	now      func() time.Time
+	url  string
+	ttl  time.Duration
+	http *http.Client
+	now  func() time.Time
 
 	mu        sync.RWMutex
 	keys      map[string]crypto.PublicKey
