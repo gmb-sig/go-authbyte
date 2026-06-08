@@ -1,6 +1,6 @@
-# go-authbyte — `auth-client` library
+# go-authbyte — auth client library
 
-The in-process **auth-client** for the eSignature Portal. Compiled into every
+The in-process **`go-authbyte`** auth client library for the eSignature Portal. Compiled into every
 backend service (Portal-API, Document, Envelope, Preview, Notification, Audit,
 Signing Orchestrator) and into the Identity/Auth service itself for guarding its
 own endpoints.
