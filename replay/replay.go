@@ -22,10 +22,10 @@ type Store interface {
 // Memory is a per-pod in-memory replay store with lazy expiry plus a periodic
 // sweep.
 type Memory struct {
-	mu      sync.Mutex
-	seen    map[string]time.Time
-	now     func() time.Time
-	lastGC  time.Time
+	mu     sync.Mutex
+	seen   map[string]time.Time
+	now    func() time.Time
+	lastGC time.Time
 }
 
 // NewMemory returns an in-memory replay store.

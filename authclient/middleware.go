@@ -58,20 +58,20 @@ func (c *Client) handle(ctx *azugo.Context) bool {
 
 	res, err := c.validate(ctx, tokenStr)
 	if err != nil {
+		ctx.Error(err)
+
 		var de dpopError
 		if errors.As(err, &de) {
 			ctx.Header.Set(headerWWWAuth, `DPoP error="`+de.code+`"`)
 		}
 
-		ctx.Error(err)
-
 		return false
 	}
 
 	if res.needNonce {
+		ctx.Error(errUnauthorized)
 		ctx.Header.Set(headerDPoPNonce, res.nonceToSend)
 		ctx.Header.Set(headerWWWAuth, `DPoP error="use_dpop_nonce"`)
-		ctx.Error(errUnauthorized)
 
 		return false
 	}

@@ -31,14 +31,14 @@ const HeaderType = "dpop+jwt"
 
 // Errors returned by Verify.
 var (
-	ErrMalformed   = errors.New("malformed dpop proof")
-	ErrType        = errors.New("dpop proof has wrong typ header")
-	ErrKey         = errors.New("dpop proof has missing or invalid jwk header")
-	ErrSignature   = errors.New("dpop proof signature verification failed")
-	ErrMethod      = errors.New("dpop proof htm does not match request method")
-	ErrURL         = errors.New("dpop proof htu does not match request uri")
-	ErrATH         = errors.New("dpop proof ath does not match access token")
-	ErrExpired     = errors.New("dpop proof is expired or issued in the future")
+	ErrMalformed    = errors.New("malformed dpop proof")
+	ErrType         = errors.New("dpop proof has wrong typ header")
+	ErrKey          = errors.New("dpop proof has missing or invalid jwk header")
+	ErrSignature    = errors.New("dpop proof signature verification failed")
+	ErrMethod       = errors.New("dpop proof htm does not match request method")
+	ErrURL          = errors.New("dpop proof htu does not match request uri")
+	ErrATH          = errors.New("dpop proof ath does not match access token")
+	ErrExpired      = errors.New("dpop proof is expired or issued in the future")
 	ErrMissingNonce = errors.New("dpop proof is missing a nonce")
 )
 
